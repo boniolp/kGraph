@@ -1,5 +1,5 @@
 <p align="center">
-<img width="200" src="./ressources/kGraph_logo.png"/>
+<img width="160" src="./ressources/kGraph_logo.png"/>
 </p>
 
 
