@@ -14,6 +14,8 @@
 
 ## kGraph in short
 
+kGraph is an explainable and interpretable Graph-based time series clustering. kGraph is divided into three steps: (i) Graph computation, (ii) Graph clustering, and (iii) Consensus Clustering. In practice, it first projects the time series into a graph (using a similar method as Series2Graph) and repeats the operation for multiple pattern lengths. For each pattern length, we use the corresponding graph to cluster time series (based on nodes and edges frequency for each time series). We then find a consensus between all pattern lengths and use the consensus as clustering labels.
+
 ## Contributors
 
 - [Paul Boniol](https://boniolp.github.io/)
