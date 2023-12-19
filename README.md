@@ -20,7 +20,7 @@
 
 First, in order to play with kGraph, please download the [UCR archive](https://www.cs.ucr.edu/%7Eeamonn/time_series_data_2018/). Then modify the path in [utils.py](https://github.com/boniolp/kGraph/blob/main/utils/utils.py) accordingly.
 
-All python packages needed are listed in [requirements.txt](https://github.com/boniolp/kGraph/blob/main/requirements.txt) file and can be installed simply using the pip command: 
+All Python packages needed are listed in [requirements.txt](https://github.com/boniolp/kGraph/blob/main/requirements.txt) file and can be installed simply using the pip command: 
 
 ```(bash) 
 conda env create --file environment.yml
@@ -28,7 +28,7 @@ conda activate kgraph
 pip install -r requirements.txt
 ``` 
 
-You can then install kgraph locally with the following command:
+You can then install kGraph locally with the following command:
 
 ```(bash) 
 pip install .
@@ -36,7 +36,7 @@ pip install .
 
 ## Usage
 
-We depicts below a code snippet demonstrating how to use kGraph.
+We depict below a code snippet demonstrating how to use kGraph.
 
 ```python 
 import sys
@@ -74,7 +74,7 @@ ARI score:  0.986598879940902
 
 ### Visualization tools
 
-We provide visualization methods to plot the graph and the identified clusters (i.e., graphoids). After running kGraph, you can run the following code to plot the graphs partioned in different clusters (grey are nodes that are not associated to a specific cluster).
+We provide visualization methods to plot the graph and the identified clusters (i.e., graphoids). After running kGraph, you can run the following code to plot the graphs partitioned in different clusters (grey are nodes that are not associated with a specific cluster).
 
 ```python
 clf.show_graphoids(group=True,save_fig=True,namefile='Trace_kgraph')
