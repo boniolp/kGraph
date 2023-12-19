@@ -18,9 +18,9 @@
 
 ## Getting started
 
-First, in order to play with kGraph, please download the [UCR archive](https://www.cs.ucr.edu/%7Eeamonn/time_series_data_2018/). Then modify the path in [utils.py](https://github.com/boniolp/kGraph/utils/utils.py) accordingly.
+First, in order to play with kGraph, please download the [UCR archive](https://www.cs.ucr.edu/%7Eeamonn/time_series_data_2018/). Then modify the path in [utils.py](https://github.com/boniolp/kGraph/blob/main/utils/utils.py) accordingly.
 
-All python packages needed are listed in [requirements.txt](https://github.com/boniolp/dCAM/blob/main/requirements.txt) file and can be installed simply using the pip command: 
+All python packages needed are listed in [requirements.txt](https://github.com/boniolp/kGraph/blob/main/requirements.txt) file and can be installed simply using the pip command: 
 
 ```(bash) 
 conda env create --file environment.yml
@@ -38,7 +38,7 @@ pip install .
 
 We depicts below a code snippet demonstrating how to use kGraph.
 
-```(python) 
+```python 
 import sys
 import pandas as pd
 import numpy as np
@@ -76,16 +76,16 @@ ARI score:  0.986598879940902
 
 We provide visualization methods to plot the graph and the identified clusters (i.e., graphoids). After running kGraph, you can run the following code to plot the graphs partioned in different clusters (grey are nodes that are not associated to a specific cluster).
 
-```(python) 
+```python
 clf.show_graphoids(group=True,save_fig=True,namefile='Trace_kgraph')
 ``` 
 <p align="center">
-<img width="190" src="./ressources/Trace_kgraph.jpg"/>
+<img width="400" src="./ressources/Trace_kgraph.jpg"/>
 </p>
 
 Instead of visualizing the graph, we can directly retrieve the most representative nodes for each cluster with the following code:
 
-```(python) 
+```python 
 nb_patterns = 1
 
 #Get the most representative nodes
@@ -112,10 +112,10 @@ plt.savefig('Trace_cluster_interpretation.jpg')
 plt.close()
 ``` 
 <p align="center">
-<img width="190" src="./ressources/Trace_cluster_interpretation.jpg"/>
+<img width="400" src="./ressources/Trace_cluster_interpretation.jpg"/>
 </p>
 
-You may find a script containing all the code above [here](https://github.com/boniolp/kGraph/examples/scripts/Trace_example.py).
+You may find a script containing all the code above [here](https://github.com/boniolp/kGraph/blob/main/examples/scripts/Trace_example.py).
 
 
 
