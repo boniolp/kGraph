@@ -3,7 +3,7 @@
 </p>
 
 
-<h1 align="center">kGraph</h1>
+<h1 align="center">k-Graph</h1>
 <h2 align="center">Explainable and Interpretable Graph-based time series clustering.</h2>
 
 <div align="center">
@@ -14,7 +14,7 @@
 
 ## kGraph in short
 
-kGraph is an explainable and interpretable Graph-based time series clustering. kGraph is divided into three steps: (i) Graph computation, (ii) Graph clustering, and (iii) Consensus Clustering. In practice, it first projects the time series into a graph (using a similar method as Series2Graph) and repeats the operation for multiple pattern lengths. For each pattern length, we use the corresponding graph to cluster time series (based on nodes and edges frequency for each time series). We then find a consensus between all pattern lengths and use the consensus as clustering labels.
+k-Graph is an explainable and interpretable Graph-based time series clustering. k-Graph is divided into three steps: (i) Graph computation, (ii) Graph clustering, and (iii) Consensus Clustering. In practice, it first projects the time series into a graph (using a similar method as Series2Graph) and repeats the operation for multiple pattern lengths. For each pattern length, we use the corresponding graph to cluster time series (based on nodes and edges frequency for each time series). We then find a consensus between all pattern lengths and use the consensus as clustering labels.
 
 ## Contributors
 
@@ -101,7 +101,7 @@ ARI score:  0.986598879940902
 
 ### Visualization tools
 
-We provide visualization methods to plot the graph and the identified clusters (i.e., graphoids). After running kGraph, you can run the following code to plot the graphs partitioned in different clusters (grey are nodes that are not associated with a specific cluster).
+We provide visualization methods to plot the graph and the identified clusters (i.e., graphoids). After running k-Graph, you can run the following code to plot the graphs partitioned in different clusters (grey are nodes that are not associated with a specific cluster).
 
 ```python
 clf.show_graphoids(group=True,save_fig=True,namefile='Trace_kgraph')
