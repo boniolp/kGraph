@@ -16,6 +16,24 @@
 
 ## References
 
+If you re-use this work, please cite:
+
+```
+@inproceedings{kgraph,
+  author    = {Paul Boniol and
+               Donato Tiano and
+               Angela Bonifati and
+               Themis Palpanas},
+  title     = {kGraph: Explainable and Interpretable Graph-based time series clustering},
+  booktitle = {},
+  pages     = {XXXX--XXXX},
+  publisher = {},
+  year      = {2024},
+  url       = {},
+  doi       = {}
+}
+```
+
 ## Getting started
 
 First, in order to play with kGraph, please download the [UCR archive](https://www.cs.ucr.edu/%7Eeamonn/time_series_data_2018/). Then modify the path in [utils.py](https://github.com/boniolp/kGraph/blob/main/utils/utils.py) accordingly.
