@@ -80,7 +80,7 @@ We provide visualization methods to plot the graph and the identified clusters (
 clf.show_graphoids(group=True,save_fig=True,namefile='Trace_kgraph')
 ``` 
 <p align="center">
-<img width="400" src="./ressources/Trace_kgraph.jpg"/>
+<img width="800" src="./ressources/Trace_kgraph.jpg"/>
 </p>
 
 Instead of visualizing the graph, we can directly retrieve the most representative nodes for each cluster with the following code:
@@ -112,7 +112,7 @@ plt.savefig('Trace_cluster_interpretation.jpg')
 plt.close()
 ``` 
 <p align="center">
-<img width="400" src="./ressources/Trace_cluster_interpretation.jpg"/>
+<img width="800" src="./ressources/Trace_cluster_interpretation.jpg"/>
 </p>
 
 You may find a script containing all the code above [here](https://github.com/boniolp/kGraph/blob/main/examples/scripts/Trace_example.py).
