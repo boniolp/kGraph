@@ -14,6 +14,13 @@
 
 ## kGraph in short
 
+## Contributors
+
+- [Paul Boniol](https://boniolp.github.io/)
+- [Donato Tiano](https://liris.cnrs.fr/en/member-page/donato-tiano)
+- [Angela Bonifati](https://perso.liris.cnrs.fr/angela.bonifati/)
+- [Themis Palpanas](https://helios2.mi.parisdescartes.fr/~themisp/)
+
 ## References
 
 If you re-use this work, please cite:
