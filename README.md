@@ -14,7 +14,7 @@
 
 ## k-Graph in short
 
-k-Graph is an explainable and interpretable Graph-based time series clustering. k-Graph is divided into three steps: (i) Graph computation, (ii) Graph clustering, and (iii) Consensus Clustering. In practice, it first projects the time series into a graph (using a similar method as Series2Graph) and repeats the operation for multiple pattern lengths. For each pattern length, we use the corresponding graph to cluster time series (based on nodes and edges frequency for each time series). We then find a consensus between all pattern lengths and use the consensus as clustering labels.
+k-Graph is an explainable and interpretable Graph-based time series clustering. k-Graph is divided into three steps: (i) Graph computation, (ii) Graph clustering, and (iii) Consensus Clustering. In practice, it first projects the time series into a graph (using a similar method as Series2Graph) and repeats the operation for multiple pattern lengths. For each pattern length, we use the corresponding graph to cluster time series (based on nodes and edges frequency for each time series). We then find a consensus between all pattern lengths and use the consensus as clustering labels. Thanks to the graph representation of the time series (into a unique graph), k-Graph can be used for variable length time series. 
 
 ## Contributors
 
@@ -79,8 +79,8 @@ from utils import fetch_ucr_dataset
 from kgraph import kGraph
 
 
-
-data = fetch_ucr_dataset('Trace')
+path = "/Path/to/UCRArchive_2018/"
+data = fetch_ucr_dataset('Trace',path)
 X = np.concatenate([data['data_train'],data['data_test']],axis=0)
 y = np.concatenate([data['target_train'],data['target_test']],axis=0)
 
@@ -98,6 +98,12 @@ Consensus done! (0.03878021240234375 s)
 Ensemble clustering done! (0.0060100555419921875 s) 
 ARI score:  0.986598879940902
 ```
+
+For variable lenght time series datasets, k-Graph has to be initialized as follows:
+
+```python
+clf = kGraph(n_clusters=len(set(y)),variable_length=True,n_lengths=10,n_jobs=4)
+``` 
 
 ### Visualization tools
 

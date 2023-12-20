@@ -66,7 +66,11 @@ class kGraph(object):
 		
 	sample : int, optional
 		Sample parameter to train the PCA of the projection step (default is 10).
-		
+	
+	variable_length : bool, optional
+		If True, X is expected to be a list of arrays of differnt lengths (default is False).
+		If False, X is expected to be an array.
+
 	verbose : bool, optional
 		If True, print verbose information during execution (default is True).
 
@@ -136,6 +140,7 @@ class kGraph(object):
 		rate_max_length=0.33,
 		seed=0,
 		sample=10,
+		variable_length = False,
 		verbose=True):
 		"""
 		initialize kGraph method
@@ -150,6 +155,8 @@ class kGraph(object):
 		self.seed = seed
 		self.verbose = verbose
 		self.sample = sample
+
+		self.variable_length = variable_length
 
 	# Public method
 
@@ -314,7 +321,10 @@ class kGraph(object):
 				pos_in_time = min(
 					range(len(edge_in_time[current_pos])), 
 					key=lambda j: abs(edge_in_time[current_pos][j]-relative_pos))
-				ts = X[int(current_pos),int(pos_in_time):int(pos_in_time+length)]
+				if self.variable_length:
+					ts = X[int(current_pos)][int(pos_in_time):int(pos_in_time+length)]
+				else:
+					ts = X[int(current_pos),int(pos_in_time):int(pos_in_time+length)]
 				ts = ts - np.mean(ts)
 				result.append(ts)
 			
@@ -499,7 +509,10 @@ class kGraph(object):
 				edges_end = self.graphs[length]['graph']['list_edge_pos'][i+1]
 				edges = self.graphs[length]['graph']['list_edge'][edges_start:edges_end]
 
-				nodes = set([e[0] for e in edges] + [edges[-1][1]])
+				if len(edges) > 0:
+					nodes = set([e[0] for e in edges] + [edges[-1][1]])
+				else:
+					nodes = []
 
 				for elem in list_elem:
 					if elem in nodes:
@@ -667,8 +680,12 @@ class kGraph(object):
 
 	def __run_proj(self,X,length_pattern,latent):
 		
-		min_X = np.min(X)
-		max_X = np.max(X)
+		if self.variable_length:
+			min_X = np.min([np.min(X_sub) for X_sub in X])
+			max_X = np.max([np.max(X_sub) for X_sub in X])
+		else:
+			min_X = np.min(X)
+			max_X = np.max(X)
 		downsample = max(1,latent//100)
 
 		sample = self.sample#max(1,latent//2)#4

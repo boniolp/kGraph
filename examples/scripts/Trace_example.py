@@ -15,8 +15,9 @@ from kgraph import kGraph
 if __name__ == '__main__':
 	
 	Dataset = 'Trace'
+	path = "/Users/pboniol/Desktop/datasets/UCRArchive_2018/"
 
-	data = fetch_ucr_dataset(Dataset)
+	data = fetch_ucr_dataset(Dataset,path)
 
 	X = np.concatenate([data['data_train'],data['data_test']],axis=0)
 	y = np.concatenate([data['target_train'],data['target_test']],axis=0)
