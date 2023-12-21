@@ -37,10 +37,12 @@ def fetch_ucr_dataset(dataset,path,variable_length=False):
         train_data = train_data.drop(0,axis=1)
         train_data = train_data.fillna(0)
         data_train = np.array(train_data.values)
+        data_train = (data_train - np.mean(data_train,axis=1,keepdims=True))/(np.std(data_train,axis=1,keepdims=True))
 
         test_data = pd.read_csv(path + "{}_TEST.tsv".format(dataset),sep='\t',header=None)
         target_test = np.array(test_data[0].values)
         test_data = test_data.drop(0,axis=1)
         test_data = test_data.fillna(0)
         data_test = np.array(test_data.values)
+        data_test = (data_test - np.mean(data_test,axis=1,keepdims=True))/(np.std(data_test,axis=1,keepdims=True))
         return {'data_train':data_train,'target_train':target_train, 'data_test':data_test, 'target_test':target_test}
