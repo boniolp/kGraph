@@ -28,6 +28,8 @@ setup(
     url="https://github.com/boniolp/kGraph",
     entry_points={},
     install_requires=[
+        'aeon==0.6.0',
+        'setuptools==63.2.0',
         'numpy==1.24.4',
         'pandas==2.0.3',
         'matplotlib==3.7.2',
