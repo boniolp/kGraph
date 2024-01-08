@@ -46,3 +46,11 @@ def fetch_ucr_dataset(dataset,path,variable_length=False):
         data_test = np.array(test_data.values)
         data_test = (data_test - np.mean(data_test,axis=1,keepdims=True))/(np.std(data_test,axis=1,keepdims=True))
         return {'data_train':data_train,'target_train':target_train, 'data_test':data_test, 'target_test':target_test}
+
+
+def fetch_ucr_dataset_online(dataset):
+    from aeon.datasets import load_classification
+    dataCof = load_classification("Trace")
+    X = np.squeeze(dataCof[0], axis=1)
+    y = dataCof[1].astype(int)
+    return X, y
