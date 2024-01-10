@@ -141,6 +141,7 @@ class kGraph(object):
 		seed=0,
 		sample=10,
 		variable_length = False,
+		precompute_explaination = False,
 		verbose=True):
 		"""
 		initialize kGraph method
@@ -157,6 +158,10 @@ class kGraph(object):
 		self.sample = sample
 
 		self.variable_length = variable_length
+
+		self.optimal_length = None
+
+		self.compute_revelance = precompute_explaination
 
 	# Public method
 
@@ -234,7 +239,8 @@ class kGraph(object):
 		self.labels_ = clustering_ens.labels_
 
 		
-		self.__get_length_relevance()
+		if self.compute_revelance == True:
+			self.__get_length_relevance()
 		
 		return self
 
@@ -267,6 +273,8 @@ class kGraph(object):
 
 		"""
 		if length is None:
+			if self.optimal_length is None:
+				self.__get_length_relevance()
 			length = self.optimal_length
 
 		all_graphoid,names_features = self.__compute_all_graphoid(length)
@@ -306,6 +314,8 @@ class kGraph(object):
 
 		"""
 		if length is None:
+			if self.optimal_length is None:
+				self.__get_length_relevance()
 			length = self.optimal_length
 
 		result = []
@@ -373,6 +383,8 @@ class kGraph(object):
 
 		"""
 		if length is None:
+			if self.optimal_length is None:
+				self.__get_length_relevance()
 			length = self.optimal_length
 
 		all_graphoid,names_features = self.compute_graphoids(length=length,mode='Proportion')
@@ -435,6 +447,8 @@ class kGraph(object):
 
 		"""
 		if length is None:
+			if self.optimal_length is None:
+				self.__get_length_relevance()
 			length = self.optimal_length
 
 
@@ -646,16 +660,23 @@ class kGraph(object):
 
 	def __create_graph(self,X,length_pattern,latent,rate):
 
+		#time_start = time.time()
 		dict_result_P = self.__run_proj(X,length_pattern,latent)
-		dict_result_G = self.__create_graph_from_proj(dict_result_P,rate)
+		#self.__verboseprint("PCA time (length {})".format(length_pattern), time.time() - time_start)
+		dict_result_G = self.__create_graph_from_proj(dict_result_P,rate,length_pattern)
 		
 		return dict_result_G
 
 
-	def __create_graph_from_proj(self,dict_result,rate):
+	def __create_graph_from_proj(self,dict_result,rate,length_pattern):
 
-		res_point,res_dist = self.__get_intersection_from_radius(dict_result['A'],rate=rate)
+		#time_start = time.time()
+		res_point,res_dist = self.__get_intersection_from_radius(dict_result['A'],dict_result['index_pos'],rate=rate)
+		#self.__verboseprint("Extraction Time (length {})".format(length_pattern),time.time() - time_start)
+		#time_start = time.time()
 		nodes_set,node_weight = self.__nodes_extraction(dict_result['A'],res_point,res_dist,rate=rate)
+		#self.__verboseprint("Node Time (length {})".format(length_pattern),time.time() - time_start)
+		#time_start = time.time()
 
 		dict_edge_all,dict_node_all = {},{}
 		list_edge_all,edge_in_time_all,list_edge_pos = [],[],[]
@@ -669,7 +690,7 @@ class kGraph(object):
 			dict_edge_all = self.__merge_dict(dict_edge_all,dict_edge)
 			dict_node_all = self.__merge_dict(dict_node_all,dict_node)
 		list_edge_pos.append(len(list_edge_all))
-		
+		#self.__verboseprint("Edge Time (length {})".format(length_pattern),time.time() - time_start)
 		return {
 				'list_edge': list_edge_all,
 				'dict_edge': dict_edge_all,
@@ -714,7 +735,7 @@ class kGraph(object):
 		else:
 			phase_space_train = np.concatenate(phase_space_train_list,axis=0)
 
-		pca_1 = PCA(n_components=3).fit(phase_space_train[np.random.choice(
+		pca_1 = PCA(n_components=3,svd_solver='randomized').fit(phase_space_train[np.random.choice(
 			len(phase_space_train),
 			size=len(phase_space_train)//sample,
 			replace=False)])
@@ -847,7 +868,7 @@ class kGraph(object):
 		
 		return [x, y], self.__distance(line1[0],[x,y])
 
-	def __get_intersection_from_radius(self,A,rate):
+	def __get_intersection_from_radius(self,A,index_pos,rate):
 	
 		max_1 = max(max(A[:,0]),abs(min(A[:,0])))
 		max_2 = max(max(A[:,1]),abs(min(A[:,1])))
@@ -857,7 +878,8 @@ class kGraph(object):
 		result = [[] for i in range(len(set_point))]
 		result_dist = [[] for i in range(len(set_point))]
 
-		for k in range(0,len(A)-1):	
+		for k in random.sample(list(range(0,len(A)-1)),len(list(range(0,len(A)-1)))//self.sample):	
+			#if k-1 not in index_pos[1:]:
 			theta_to_check = self.__find_theta_to_check(A,k,rate)
 			was_found = False
 			for i in theta_to_check:
@@ -1090,6 +1112,8 @@ class kGraph(object):
 		None
 		"""
 		if length is None:
+			if self.optimal_length is None:
+				self.__get_length_relevance()
 			length = self.optimal_length
 		
 		G_nx = nx.DiGraph(self.graphs[length]['graph']['list_edge'])
