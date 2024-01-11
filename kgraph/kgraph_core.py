@@ -71,6 +71,12 @@ class kGraph(object):
 		If True, X is expected to be a list of arrays of differnt lengths (default is False).
 		If False, X is expected to be an array.
 
+	precompute_explaination: bool, optional
+		If True, precompute optimal length used for interpretation of the clustering (default False).
+		If False, optimal length will be computed at each explanation/interpretation.
+		Recommended to set to True if an interpretation/explanation is desired.
+		Recommended to set to False if only the clustering results is needed.
+
 	verbose : bool, optional
 		If True, print verbose information during execution (default is True).
 
@@ -156,12 +162,10 @@ class kGraph(object):
 		self.seed = seed
 		self.verbose = verbose
 		self.sample = sample
-
 		self.variable_length = variable_length
+		self.compute_revelance = precompute_explaination
 
 		self.optimal_length = None
-
-		self.compute_revelance = precompute_explaination
 
 	# Public method
 
@@ -674,7 +678,7 @@ class kGraph(object):
 		res_point,res_dist = self.__get_intersection_from_radius(dict_result['A'],dict_result['index_pos'],rate=rate)
 		#self.__verboseprint("Extraction Time (length {})".format(length_pattern),time.time() - time_start)
 		#time_start = time.time()
-		nodes_set,node_weight = self.__nodes_extraction(dict_result['A'],res_point,res_dist,rate=rate)
+		nodes_set,node_weight = self.__nodes_extraction(dict_result['A'],res_point,res_dist,rate=rate,pattern_length=length_pattern)
 		#self.__verboseprint("Node Time (length {})".format(length_pattern),time.time() - time_start)
 		#time_start = time.time()
 
@@ -906,7 +910,7 @@ class kGraph(object):
 		return list(kde.evaluate(x_grid))
 
 
-	def __nodes_extraction(self,A,res_point,res_dist,rate):
+	def __nodes_extraction(self,A,res_point,res_dist,rate,pattern_length):
 
 		max_all = max(max(max(A[:,0]),max(A[:,1])),max(-min(A[:,0]),-min(A[:,1])))
 		max_all = max_all*1.2
@@ -915,15 +919,24 @@ class kGraph(object):
 		list_maxima_val = []
 		for segment in range(rate):
 			pos_start = sum(len(res_point[i]) for i in range(segment))
-			dist_on_segment = self.__kde_scipy(
-				res_dist[pos_start:pos_start+len(res_point[segment])], 
-				range_val_distrib)
-			dist_on_segment = (dist_on_segment - min(dist_on_segment))/(max(dist_on_segment) - min(dist_on_segment))
-			maxima = argrelextrema(np.array(dist_on_segment), np.greater)[0]
-			if len(maxima) == 0:
-				maxima = np.array([0])
-			maxima_ind = [range_val_distrib[val] for val in list(maxima)]
-			maxima_val = [dist_on_segment[val] for val in list(maxima)]
+			if len(res_dist[pos_start:pos_start+len(res_point[segment])]) == 0:
+				self.__verboseprint("[WARNING] for Graph {}: No intersection found for at least one radius. Sample might be too high.".format(pattern_length))
+				maxima_ind = [0]
+				maxima_val = [0]
+			elif len(res_dist[pos_start:pos_start+len(res_point[segment])]) == 1:
+				self.__verboseprint("[WARNING] for Graph {}: Few intersection found for at least one radius. Sample might be too high.".format(pattern_length))
+				maxima_ind = [res_dist[pos_start:pos_start+len(res_point[segment])][0]]
+				maxima_val = [1]
+			else:
+				dist_on_segment = self.__kde_scipy(
+					res_dist[pos_start:pos_start+len(res_point[segment])], 
+					range_val_distrib)
+				dist_on_segment = (dist_on_segment - min(dist_on_segment))/(max(dist_on_segment) - min(dist_on_segment))
+				maxima = argrelextrema(np.array(dist_on_segment), np.greater)[0]
+				if len(maxima) == 0:
+					maxima = np.array([0])
+				maxima_ind = [range_val_distrib[val] for val in list(maxima)]
+				maxima_val = [dist_on_segment[val] for val in list(maxima)]
 			list_maxima.append(maxima_ind)
 			list_maxima_val.append(maxima_val)
 
