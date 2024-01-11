@@ -204,6 +204,10 @@ class kGraph(object):
 
 		tim_start = time.time()
 
+		if self.sample > (len(X)*(len(X[0]) - max(random_length_set)))//3:
+			self.sample = (len(X)*(len(X[0]) - max(random_length_set)))//3
+			self.__verboseprint("[WARNING]: Sample too large. Setting to the maximum acceptable value: {}".format(self.sample))
+
 		parameters = [[X,pattern_length] for pattern_length in random_length_set]
 		with get_context("spawn").Pool(processes=self.n_jobs) as pool:
 			all_pred_raw = pool.map(self.run_graphs_parallel,parameters) 
@@ -713,7 +717,7 @@ class kGraph(object):
 			max_X = np.max(X)
 		downsample = max(1,latent//100)
 
-		sample = self.sample#max(1,latent//2)#4
+		
 
 
 		X_ref = []
@@ -738,6 +742,8 @@ class kGraph(object):
 			phase_space_train = phase_space_train_list[0]
 		else:
 			phase_space_train = np.concatenate(phase_space_train_list,axis=0)
+
+		sample = self.sample#max(1,latent//2)#4
 
 		pca_1 = PCA(n_components=3,svd_solver='randomized').fit(phase_space_train[np.random.choice(
 			len(phase_space_train),
