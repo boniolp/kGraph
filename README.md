@@ -84,7 +84,7 @@ Ensemble clustering done! (0.0060100555419921875 s)
 ARI score:  0.986598879940902
 ```
 
-For variable lenght time series datasets, k-Graph has to be initialized as follows:
+For variable lenght time series datasets, $k$-Graph has to be initialized as follows:
 
 ```python
 clf = kGraph(n_clusters=len(set(y)),variable_length=True,n_lengths=10,n_jobs=4)
