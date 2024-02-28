@@ -3,7 +3,7 @@
 </p>
 
 
-<h1 align="center">k-Graph</h1>
+<h1 align="center">$k$-Graph</h1>
 <h2 align="center"> A Graph Embedding for Interpretable Time Series Clustering</h2>
 
 <div align="center">
