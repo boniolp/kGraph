@@ -17,7 +17,7 @@
 k-Graph is an explainable and interpretable Graph-based time series clustering. k-Graph is divided into three steps: (i) Graph embedding, (ii) Graph clustering, and (iii) Consensus Clustering. In practice, it first projects the time series into a graph and repeats the operation for multiple pattern lengths. For each pattern length, we use the corresponding graph to cluster time series (based on nodes and edges frequency for each time series). We then find a consensus between all pattern lengths and use the consensus as clustering labels. Thanks to the graph representation of the time series (into a unique graph), k-Graph can be used for variable length time series. Moreover, we provide a way to select the most interpretable graph for the resulting clustering partition and allow the user to visualize the subsequences contained in the most represtnative and exclusive nodes.
 
 <p align="center">
-<img width="160" src="./ressources/pipeline.png"/>
+<img width="860" src="./ressources/pipeline.png"/>
 </p>
 
 ## Contributors
