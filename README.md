@@ -18,30 +18,11 @@ k-Graph is an explainable and interpretable Graph-based time series clustering. 
 
 ## Contributors
 
-- [Paul Boniol](https://boniolp.github.io/)
-- [Donato Tiano](https://liris.cnrs.fr/en/member-page/donato-tiano)
-- [Angela Bonifati](https://perso.liris.cnrs.fr/angela.bonifati/)
-- [Themis Palpanas](https://helios2.mi.parisdescartes.fr/~themisp/)
+- [Paul Boniol](https://boniolp.github.io/), Inria, ENS, PSL University, CNRS
+- [Donato Tiano](https://liris.cnrs.fr/en/member-page/donato-tiano), Università degli Studi di Modena e Reggio Emilia
+- [Angela Bonifati](https://perso.liris.cnrs.fr/angela.bonifati/), Lyon 1 University, IUF, Liris CNRS
+- [Themis Palpanas](https://helios2.mi.parisdescartes.fr/~themisp/), Université Paris Cité, IUF
 
-## References
-
-If you re-use this work, please cite:
-
-```
-@inproceedings{kgraph,
-  author    = {Paul Boniol and
-               Donato Tiano and
-               Angela Bonifati and
-               Themis Palpanas},
-  title     = {kGraph: Explainable and Interpretable Graph-based time series clustering},
-  booktitle = {},
-  pages     = {XXXX--XXXX},
-  publisher = {},
-  year      = {2024},
-  url       = {},
-  doi       = {}
-}
-```
 
 ## Getting started
 
