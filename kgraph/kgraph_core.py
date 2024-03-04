@@ -26,7 +26,7 @@ import networkx as nx
 # GraphViz import: If you have trouble installing graphviz
 # You can comment this import below, as well as all the 
 # visualization methods.
-from networkx.drawing.nx_agraph import graphviz_layout
+#from networkx.drawing.nx_agraph import graphviz_layout
 
 
 
@@ -1073,6 +1073,13 @@ class kGraph(object):
 		None
 		"""
 
+		try:
+    			from networkx.drawing.nx_agraph import graphviz_layout
+			graph_viz_used = True
+		except ImportError as e:
+			print("Please install pygraphviz (and graphviz) for a more approriate graph visualization")
+    			graph_viz_used = False
+
 		if lengths is None:
 			all_lengths = list(self.graphs.keys())
 		else: 
@@ -1081,7 +1088,7 @@ class kGraph(object):
 		plt.figure(figsize=figsize)
 		for i,length in enumerate(all_lengths):
 			plt.subplot(int(len(all_lengths)/4)+1,4,1+i)
-			self.__plot_graph_length(length)
+			self.__plot_graph_length(length,graph_viz_used)
 			plt.title('Relevance of length {}: {:.3f}'.format(
 				length,
 				self.length_relevance[np.where(self.length_relevance == length)[0],1][0]))
@@ -1130,6 +1137,14 @@ class kGraph(object):
 		-------
 		None
 		"""
+
+		try:
+    			from networkx.drawing.nx_agraph import graphviz_layout
+			graph_viz_used = True
+		except ImportError as e:
+			print("Please install pygraphviz (and graphviz) for a more approriate graph visualization")
+    			graph_viz_used = False
+			
 		if length is None:
 			if self.optimal_length is None:
 				self.__get_length_relevance()
@@ -1141,13 +1156,13 @@ class kGraph(object):
 		
 		if group:
 			plt.figure(figsize=(10,10))
-			self.__plot_graphoid(length,graphoid='all',mode=mode,pos=pos,majority_level=majority_level)
+			self.__plot_graphoid(length,graphoid='all',mode=mode,pos=pos,majority_level=majority_level,graph_viz_used=graph_viz_used)
 			plt.title('All graphoids')
 		else:
 			plt.figure(figsize=figsize)
 			for i in range(len(set(self.labels_))):
 				plt.subplot(len(set(self.labels_))//2+1,2,i+1)
-				self.__plot_graphoid(length,graphoid=i,mode=mode,pos=pos,majority_level=majority_level)
+				self.__plot_graphoid(length,graphoid=i,mode=mode,pos=pos,majority_level=majority_level,graph_viz_used=graph_viz_used)
 				plt.title('Graph (graphoid in red) for cluster {}'.format(i))
 		
 		if save_fig:
@@ -1171,11 +1186,13 @@ class kGraph(object):
 	
 
 
-	def __plot_graph_length(self,length):
+	def __plot_graph_length(self,length,graph_viz_used=False):
 		G = self.graphs[length]['graph']
 		G_nx = nx.DiGraph(self.graphs[length]['graph']['list_edge'])
-		pos = nx.nx_agraph.graphviz_layout(G_nx,prog="fdp")
-		
+		if graph_viz_used:
+			pos = nx.nx_agraph.graphviz_layout(G_nx,prog="fdp")
+		else:
+			pos = nx.random_layout(G_nx)
 		G_label_0,dict_node_0,edge_size_0 = self.__format_graph_viz(G_nx,G['list_edge'],G['dict_node'])
 		nx.draw(G_label_0,pos=pos,node_size=dict_node_0,linewidths=1,width=edge_size_0)
 		nx.draw_networkx_labels(G_label_0, pos,font_size=10)
@@ -1199,14 +1216,17 @@ class kGraph(object):
 		return G,dict_node,edge_size
 
 
-	def __plot_graphoid(self,length,graphoid='all',mode='Exclusive',pos=None,majority_level=0.8):
+	def __plot_graphoid(self,length,graphoid='all',mode='Exclusive',pos=None,majority_level=0.8,graph_viz_used=False):
 		
 		color_class = LIST_COLOR
 
 		G = self.graphs[length]['graph']
 		G_nx = nx.DiGraph(G['list_edge'])
 		if pos is None:
-			pos = nx.nx_agraph.graphviz_layout(G_nx,prog="fdp")
+			if graph_viz_used:
+				pos = nx.nx_agraph.graphviz_layout(G_nx,prog="fdp")
+			else:
+				pos = nx.random_layout(G_nx)
 		
 		
 		G_label_0,dict_node_0,edge_size_0 = self.__format_graph_viz(G_nx,G['list_edge'],G['dict_node'])
