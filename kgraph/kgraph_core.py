@@ -23,9 +23,6 @@ from sklearn.metrics import adjusted_rand_score
 
 import networkx as nx
 
-# GraphViz import: If you have trouble installing graphviz
-# You can comment this import below, as well as all the 
-# visualization methods.
 #from networkx.drawing.nx_agraph import graphviz_layout
 
 
@@ -1074,10 +1071,11 @@ class kGraph(object):
 		"""
 
 		try:
+			import pygraphviz
 			from networkx.drawing.nx_agraph import graphviz_layout
 			graph_viz_used = True
 		except ImportError as e:
-			print("Please install pygraphviz (and graphviz) for a more approriate graph visualization")
+			print("[WARNING] pygrpaphviz not installed. Please install pygraphviz (and graphviz) for a more approriate graph visualization")
 			graph_viz_used = False
 
 		if lengths is None:
@@ -1139,10 +1137,11 @@ class kGraph(object):
 		"""
 
 		try:
+			import pygraphviz
 			from networkx.drawing.nx_agraph import graphviz_layout
 			graph_viz_used = True
 		except ImportError as e:
-			print("Please install pygraphviz (and graphviz) for a more approriate graph visualization")
+			print("[WARNING] pygrpaphviz not installed. Please install pygraphviz (and graphviz) for a more approriate graph visualization")
 			graph_viz_used = False
 			
 		if length is None:
