@@ -1074,11 +1074,11 @@ class kGraph(object):
 		"""
 
 		try:
-    			from networkx.drawing.nx_agraph import graphviz_layout
+			from networkx.drawing.nx_agraph import graphviz_layout
 			graph_viz_used = True
 		except ImportError as e:
 			print("Please install pygraphviz (and graphviz) for a more approriate graph visualization")
-    			graph_viz_used = False
+			graph_viz_used = False
 
 		if lengths is None:
 			all_lengths = list(self.graphs.keys())
@@ -1139,11 +1139,11 @@ class kGraph(object):
 		"""
 
 		try:
-    			from networkx.drawing.nx_agraph import graphviz_layout
+			from networkx.drawing.nx_agraph import graphviz_layout
 			graph_viz_used = True
 		except ImportError as e:
 			print("Please install pygraphviz (and graphviz) for a more approriate graph visualization")
-    			graph_viz_used = False
+			graph_viz_used = False
 			
 		if length is None:
 			if self.optimal_length is None:
