@@ -29,7 +29,7 @@ setup(
     entry_points={},
     install_requires=[
         'aeon==0.6.0',
-        'setuptools==63.2.0',
+        'setuptools>=65.5.1',
         'numpy==1.24.4',
         'pandas==2.0.3',
         'matplotlib==3.7.2',
