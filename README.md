@@ -39,12 +39,19 @@ conda env create --file environment.yml
 conda activate kgraph
 pip install -r requirements.txt
 ``` 
+$k$-Graph relies on Graphviz and pyGraphviz for visualisation of the graph. Please install these packages as follows:
+
+```(bash) 
+brew install graphviz
+pip install pygraphviz
+``` 
 
 You can then install $k$-Graph locally with the following command:
 
 ```(bash) 
 pip install .
 ``` 
+
 
 ## Usage
 
