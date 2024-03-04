@@ -36,6 +36,5 @@ setup(
         'scipy==1.11.3',
         'scikit-learn==1.2.2',
         'networkx==3.1',
-        'pygraphviz==1.11',
         ]
 )
