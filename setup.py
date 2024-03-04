@@ -16,7 +16,7 @@ CLASSIFIERS = [
 ]
 
 setup(
-    name="k-graph",
+    name="kgraph-ts",
     version=__version__,
     description="kGraph",
     classifiers=CLASSIFIERS,
