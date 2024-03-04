@@ -1151,8 +1151,10 @@ class kGraph(object):
 			length = self.optimal_length
 		
 		G_nx = nx.DiGraph(self.graphs[length]['graph']['list_edge'])
-		pos = nx.nx_agraph.graphviz_layout(G_nx,prog="fdp")
-
+		if graph_viz_used:
+			pos = nx.nx_agraph.graphviz_layout(G_nx,prog="fdp")
+		else:
+			pos = nx.random_layout(G_nx)
 		
 		if group:
 			plt.figure(figsize=(10,10))
