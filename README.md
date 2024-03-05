@@ -30,13 +30,23 @@ $k$-Graph is an explainable and interpretable Graph-based time series clustering
 
 ## Getting started
 
-### Install with pip
-
 The easiest solution to install $k$-Graph is to run the following command:
 
 ```(bash) 
 pip install kgraph-ts
 ```
+
+Graphviz and pyGraphviz can be used to obtain better visualisation for $k$-Graph. These two packages are not necessary to run $k$-graph. If not installed, an random layout is used to plot the graphs.
+To benefit from a better visualisation of the graphs, please install these packages as follows:
+
+```(bash) 
+brew install graphviz
+pip install pygraphviz
+```
+
+
+
+
 
 ### Manual installation
 
@@ -48,13 +58,6 @@ conda env create --file environment.yml
 conda activate kgraph
 pip install -r requirements.txt
 ``` 
-$k$-Graph relies on Graphviz and pyGraphviz for visualisation of the graph. Please install these packages as follows:
-
-```(bash) 
-brew install graphviz
-pip install pygraphviz
-``` 
-
 You can then install $k$-Graph locally with the following command:
 
 ```(bash) 
