@@ -39,12 +39,27 @@ pip install kgraph-ts
 Graphviz and pyGraphviz can be used to obtain better visualisation for $k$-Graph. These two packages are not necessary to run $k$-graph. If not installed, an random layout is used to plot the graphs.
 To benefit from a better visualisation of the graphs, please install these packages as follows:
 
+#### For Mac:
+
 ```(bash) 
 brew install graphviz
-pip install pygraphviz
 ```
 
+#### For Linux (Ubuntu):
 
+```(bash) 
+sudo apt install graphviz
+```
+
+#### For Windows:
+
+Stable Windows install packages are listed [here](https://graphviz.org/download/)
+
+Once Graphviz is installed, you can install pygraphviz as follows:
+
+```(bash) 
+pip install pygraphviz
+```
 
 
 
