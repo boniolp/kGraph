@@ -30,8 +30,17 @@ $k$-Graph is an explainable and interpretable Graph-based time series clustering
 
 ## Getting started
 
-First, in order to play with $k$-Graph, please download the [UCR archive](https://www.cs.ucr.edu/%7Eeamonn/time_series_data_2018/). Then modify the path in [utils.py](https://github.com/boniolp/kGraph/blob/main/utils/utils.py) accordingly.
+### Install with pip
 
+The easiest solution to install $k$-Graph is to run the following command:
+
+```(bash) 
+pip install kgraph-ts
+```
+
+### Manual installation
+
+You can also install manually $k$-Graph by following the instructions below.
 All Python packages needed are listed in [requirements.txt](https://github.com/boniolp/kGraph/blob/main/requirements.txt) file and can be installed simply using the pip command: 
 
 ```(bash) 
@@ -55,7 +64,7 @@ pip install .
 
 ## Usage
 
-We depict below a code snippet demonstrating how to use $k$-Graph.
+In order to play with $k$-Graph, please check the [UCR archive](https://www.cs.ucr.edu/%7Eeamonn/time_series_data_2018/). We depict below a code snippet demonstrating how to use $k$-Graph.
 
 ```python 
 import sys
