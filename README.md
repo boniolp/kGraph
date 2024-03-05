@@ -36,8 +36,8 @@ The easiest solution to install $k$-Graph is to run the following command:
 pip install kgraph-ts
 ```
 
-Graphviz and pyGraphviz can be used to obtain better visualisation for $k$-Graph. These two packages are not necessary to run $k$-graph. If not installed, an random layout is used to plot the graphs.
-To benefit from a better visualisation of the graphs, please install these packages as follows:
+Graphviz and pyGraphviz can be used to obtain better visualisation for $k$-Graph. These two packages are not necessary to run $k$-graph. If not installed, a random layout is used to plot the graphs.
+To benefit from a better visualisation of the graphs, please install Graphviz and pyGraphviz as follows:
 
 #### For Mac:
 
