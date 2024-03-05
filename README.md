@@ -8,7 +8,7 @@
 
 <div align="center">
 <p>
-<img alt="GitHub" src="https://img.shields.io/github/license/boniolp/kgraph"> <img alt="GitHub issues" src="https://img.shields.io/github/issues/boniolp/kgraph">
+<img alt="PyPI - Downloads" src="https://pepy.tech/badge/kgraph-ts"> <img alt="PyPI" src="https://img.shields.io/pypi/v/kgraph-ts"> <img alt="GitHub" src="https://img.shields.io/github/license/boniolp/kgraph"> <img alt="GitHub issues" src="https://img.shields.io/github/issues/boniolp/kgraph"> <img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/kgraph-ts">
 </p>
 </div>
 
