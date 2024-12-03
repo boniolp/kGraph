@@ -9,6 +9,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 from .utils import LIST_COLOR
 
+
 import scipy
 from scipy.stats import norm
 from scipy.stats import gaussian_kde
@@ -19,7 +20,7 @@ from multiprocessing import Pool,get_context
 from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans,SpectralClustering
 from sklearn.metrics import adjusted_rand_score
-
+from sklearn.preprocessing import StandardScaler
 
 import networkx as nx
 
@@ -166,7 +167,7 @@ class kGraph(object):
 
 	# Public method
 
-	def fit(self,X):
+	def fit(self,X,y=None):
 		"""
 		compute kGraph on X
 
@@ -212,17 +213,18 @@ class kGraph(object):
 		all_pred,all_graph,all_df,all_pattern = [],[],[],[]
 		
 		for pred in all_pred_raw:    
-			all_pred.append(pred[0])
+			all_pred.append(np.array(pred[0]))
 			all_graph.append(pred[1])
 			all_df.append(pred[2])
 			all_pattern.append(pred[3])
 		
 		self.__verboseprint("Graphs computation done! ({} s)".format(time.time() - tim_start))
+		
 		tim_start = time.time()
-
 		sim_matrix = self.__build_consensus_matrix(all_pred)
 		
 		self.__verboseprint("Consensus done! ({} s)".format(time.time() - tim_start))
+		
 		tim_start = time.time()
 
 		clustering_ens = SpectralClustering(
@@ -231,7 +233,7 @@ class kGraph(object):
 			affinity='precomputed',
 			random_state=self.seed,
 			n_jobs=self.n_jobs).fit(sim_matrix)
-
+		
 		self.__verboseprint("Ensemble clustering done! ({} s)".format(time.time() - tim_start))
 
 		self.graphs = {all_pattern[i]:
@@ -616,14 +618,26 @@ class kGraph(object):
 		df_edge = pd.DataFrame(
 			index = list(range(len(X))),
 			columns=[str(edge) for edge in list(G['dict_edge'].keys())])
+		df_conf = pd.DataFrame(
+			index = list(range(len(X))),
+			columns=list(G['dict_node'].keys()))
 		df_node = df_node.fillna(0)
 		df_edge = df_edge.fillna(0)
+		df_conf = df_conf.fillna(0)
 		for pos_edge_index in range(len(G['list_edge_pos'])-1):
 			edge_to_analyse = G['list_edge'][G['list_edge_pos'][pos_edge_index]:G['list_edge_pos'][pos_edge_index+1]]
+			G_nx = nx.DiGraph(edge_to_analyse)
+			degree_to_anaylse = {node:val for (node,val) in G_nx.degree()}
 			for edge in edge_to_analyse:
 				df_node.at[pos_edge_index,edge[0]] += 1
+				df_conf.at[pos_edge_index,edge[0]] = degree_to_anaylse[edge[0]]
 				df_edge.at[pos_edge_index,str(edge)] += 1
-		return pd.concat([df_node, df_edge], axis=1)
+		return df_node,df_edge,df_conf
+		
+		
+		
+		
+		
 
 
 	def __create_membership_matrix(self,run):
@@ -646,6 +660,9 @@ class kGraph(object):
 				df_normalized.mean(axis=1),axis=0).div(df_normalized.std(axis=1),
 				axis=0)
 			df_normalized = df_normalized.fillna(0)
+
+
+
 			kmeans = Method.fit(df_normalized.values)
 			return kmeans.labels_
 
@@ -657,17 +674,16 @@ class kGraph(object):
 				length_pattern=max(pattern_length,4),
 				latent=max(1,pattern_length//3),
 				rate=self.rate)
-			df = self.__create_dataset(G,X)
-			clustering_pred = self.__Clustering_df(df)
+			df_node,df_edge,df_conf = self.__create_dataset(G,X)
+
+			clustering_pred = self.__Clustering_df(pd.concat([df_node, df_edge,df_conf], axis=1))
 			
-			return [clustering_pred,G,df,pattern_length]
+			return [clustering_pred,G,pd.concat([df_node, df_edge], axis=1),pattern_length]
 
 
 	def __create_graph(self,X,length_pattern,latent,rate):
 
-		#time_start = time.time()
 		dict_result_P = self.__run_proj(X,length_pattern,latent)
-		#self.__verboseprint("PCA time (length {})".format(length_pattern), time.time() - time_start)
 		dict_result_G = self.__create_graph_from_proj(dict_result_P,rate,length_pattern)
 		
 		return dict_result_G
@@ -675,13 +691,8 @@ class kGraph(object):
 
 	def __create_graph_from_proj(self,dict_result,rate,length_pattern):
 
-		#time_start = time.time()
 		res_point,res_dist = self.__get_intersection_from_radius(dict_result['A'],dict_result['index_pos'],rate=rate)
-		#self.__verboseprint("Extraction Time (length {})".format(length_pattern),time.time() - time_start)
-		#time_start = time.time()
 		nodes_set,node_weight = self.__nodes_extraction(dict_result['A'],res_point,res_dist,rate=rate,pattern_length=length_pattern)
-		#self.__verboseprint("Node Time (length {})".format(length_pattern),time.time() - time_start)
-		#time_start = time.time()
 
 		dict_edge_all,dict_node_all = {},{}
 		list_edge_all,edge_in_time_all,list_edge_pos = [],[],[]
@@ -695,7 +706,6 @@ class kGraph(object):
 			dict_edge_all = self.__merge_dict(dict_edge_all,dict_edge)
 			dict_node_all = self.__merge_dict(dict_node_all,dict_node)
 		list_edge_pos.append(len(list_edge_all))
-		#self.__verboseprint("Edge Time (length {})".format(length_pattern),time.time() - time_start)
 		return {
 				'list_edge': list_edge_all,
 				'dict_edge': dict_edge_all,
@@ -950,7 +960,7 @@ class kGraph(object):
 		result_list = [np.abs(maxi - point) for maxi in list_maxima_ind]
 		result_list_sorted = sorted(result_list)
 
-		return result_list.index(result_list_sorted[0])
+		return result_list.index(result_list_sorted[0]),result_list_sorted[0]
 
 	def __find_tuple_interseted(self,A,line):
 	
@@ -974,6 +984,8 @@ class kGraph(object):
 
 		max_1 = max(max(A[:,0]),abs(min(A[:,0])))
 		max_2 = max(max(A[:,1]),abs(min(A[:,1])))
+
+
 		set_point = self.__PointsInCircum(np.sqrt(max_1**2 + max_2**2),n=rate)
 		previous_node = "not_defined"
 
@@ -990,13 +1002,15 @@ class kGraph(object):
 					break
 				else:
 					was_found = True
-					node_in = self.__find_closest_node(set_nodes[i],to_add[0])
+					node_in,distance = self.__find_closest_node(set_nodes[i],to_add[0])
 					
 					if previous_node == "not_defined":
 						previous_node = "{}_{}".format(i,node_in)
 						dict_node[previous_node] = 1
+						
 					else:
 						list_edge.append([previous_node,"{}_{}".format(i,node_in)])
+						
 						
 						if "{}_{}".format(i,node_in) not in dict_node.keys():
 							dict_node["{}_{}".format(i,node_in)] = 1
@@ -1011,7 +1025,9 @@ class kGraph(object):
 					
 			edge_in_time.append(len(list_edge))		
 			
-		return list_edge,edge_in_time,dict_edge,dict_node
+		
+
+		return list_edge,edge_in_time,dict_edge,dict_node#,list_edge_dist
 		
 
 
