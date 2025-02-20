@@ -21,6 +21,10 @@ An interactive tool to play with $k$-Graph can be found [here](https://github.co
 <img width="860" src="./ressources/pipeline.png"/>
 </p>
 
+## References
+
+$k$-Graph has been accepted for publication IEEE Transactions on Knowledge and Data Engineering (TKDE). You may find the preprint version [here](https://arxiv.org/abs/2502.13049).
+
 ## Contributors
 
 - [Paul Boniol](https://boniolp.github.io/), Inria, ENS, PSL University, CNRS
