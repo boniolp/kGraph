@@ -23,7 +23,23 @@ An interactive tool to play with $k$-Graph can be found [here](https://github.co
 
 ## References
 
-$k$-Graph has been accepted for publication IEEE Transactions on Knowledge and Data Engineering (TKDE). You may find the preprint version [here](https://arxiv.org/abs/2502.13049).
+$k$-Graph has been accepted for publication IEEE Transactions on Knowledge and Data Engineering (TKDE). You may find the preprint version [here](https://arxiv.org/abs/2502.13049). 
+If you use $k$-Graph in your project or research, cite the following paper:
+
+> P. Boniol, D. Tiano, A. Bonifati and T. Palpanas, " k -Graph: A Graph Embedding for Interpretable Time Series Clustering," in IEEE Transactions on Knowledge and Data Engineering, doi: 10.1109/TKDE.2025.3543946.
+
+```bibtex
+@ARTICLE{10896823,
+  author={Boniol, Paul and Tiano, Donato and Bonifati, Angela and Palpanas, Themis},
+  journal={IEEE Transactions on Knowledge and Data Engineering}, 
+  title={$k$-Graph: A Graph Embedding for Interpretable Time Series Clustering}, 
+  year={2025},
+  volume={},
+  number={},
+  pages={1-14},
+  keywords={Time series analysis;Feature extraction;Clustering algorithms;Accuracy;Heuristic algorithms;Clustering methods;Training;Shape;Partitioning algorithms;Directed graphs;Time Series;Clustering;Interpretability},
+  doi={10.1109/TKDE.2025.3543946}}
+```
 
 ## Contributors
 
