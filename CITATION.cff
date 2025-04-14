@@ -1,0 +1,33 @@
+cff-version: 1.0.1
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: Boniol
+    given-names: Paul
+  - family-names: Tiano
+    given-names: Donato
+  - family-names: Bonifati
+    given-names: Angela
+  - family-names: Palpanas
+    given-names: Themis
+title: "$k$-Graph: A Graph Embedding for Interpretable Time Series Clustering"
+date-released: 2025
+url: "https://github.com/boniolp/kGraph"
+preferred-citation:
+  type: article
+  authors:
+    - family-names: Boniol
+      given-names: Paul
+    - family-names: Tiano
+      given-names: Donato
+    - family-names: Bonifati
+      given-names: Angela
+    - family-names: Palpanas
+      given-names: Themis
+  doi: 10.1109/TKDE.2025.3543946
+  journal: "IEEE Transactions on Knowledge and Data Engineering"
+  title: "$k$-Graph: A Graph Embedding for Interpretable Time Series Clustering"
+  issue: 5
+  volume: 37
+  year: 2025
+  start: 2680
+  end: 2694
