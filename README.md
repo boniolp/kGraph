@@ -34,9 +34,9 @@ If you use $k$-Graph in your project or research, cite the following paper:
   journal={IEEE Transactions on Knowledge and Data Engineering}, 
   title={$k$-Graph: A Graph Embedding for Interpretable Time Series Clustering}, 
   year={2025},
-  volume={},
-  number={},
-  pages={1-14},
+  volume={37},
+  number={5},
+  pages={2680-2694},
   keywords={Time series analysis;Feature extraction;Clustering algorithms;Accuracy;Heuristic algorithms;Clustering methods;Training;Shape;Partitioning algorithms;Directed graphs;Time Series;Clustering;Interpretability},
   doi={10.1109/TKDE.2025.3543946}}
 ```
