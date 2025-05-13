@@ -12,42 +12,43 @@
 </p>
 </div>
 
+
+## Table of Contents
+- [Introduction](#k-graph-in-short)
+- [Installation](#getting-started)
+- [Usage](#usage)
+- [Visualization](#visualization-tools)
+- [Citation](#references)
+- [Contributors](#contributors)
+
 ## $k$-Graph in short
 
-$k$-Graph is an explainable and interpretable Graph-based time series clustering. $k$-Graph is divided into three steps: (i) Graph embedding, (ii) Graph clustering, and (iii) Consensus Clustering. In practice, it first projects the time series into a graph and repeats the operation for multiple pattern lengths. For each pattern length, we use the corresponding graph to cluster time series (based on nodes and edges frequency for each time series). We then find a consensus between all pattern lengths and use the consensus as clustering labels. Thanks to the graph representation of the time series (into a unique graph), $k$-Graph can be used for variable length time series. Moreover, we provide a way to select the most interpretable graph for the resulting clustering partition and allow the user to visualize the subsequences contained in the most represtnative and exclusive nodes.
-An interactive tool to play with $k$-Graph can be found [here](https://github.com/boniolp/graphint).
+$k$-Graph is an explainable and interpretable Graph-based time series clustering. $k$-Graph is divided into three steps: (i) Graph embedding, (ii) Graph clustering, and (iii) Consensus Clustering. In practice, it first projects the time series into a graph and repeats the operation for multiple pattern lengths. For each pattern length, we use the corresponding graph to cluster the time series (based on the frequency of the nodes and edges for each time series). We then find a consensus between all pattern lengths and use the consensus as clustering labels. Thanks to the graph representation of the time series (into a unique graph), $k$-Graph can be utilized for variable-length time series. Moreover, we provide a way to select the most interpretable graph for the resulting clustering partition and allow users to visualize the subsequences contained in the most representative and exclusive nodes.
 
 <p align="center">
 <img width="860" src="./ressources/pipeline.png"/>
 </p>
 
-## References
+### 🔍 Features
+- 📊 Clusters time series using graph embeddings
+- 🔄 Supports variable-length time series analysis
+- 🧠 Provides interpretable graph visualizations
 
-$k$-Graph has been accepted for publication IEEE Transactions on Knowledge and Data Engineering (TKDE). You may find the preprint version [here](https://arxiv.org/abs/2502.13049). 
-If you use $k$-Graph in your project or research, cite the following paper:
+### 🌐 Try it Online
 
-> P. Boniol, D. Tiano, A. Bonifati and T. Palpanas, " k -Graph: A Graph Embedding for Interpretable Time Series Clustering," in IEEE Transactions on Knowledge and Data Engineering, doi: 10.1109/TKDE.2025.3543946.
+Explore $k$-Graph with our interactive tool: 👉 [**GrapHint Visualization Tool**](https://graphint.streamlit.app/)
 
-```bibtex
-@ARTICLE{10896823,
-  author={Boniol, Paul and Tiano, Donato and Bonifati, Angela and Palpanas, Themis},
-  journal={IEEE Transactions on Knowledge and Data Engineering}, 
-  title={$k$-Graph: A Graph Embedding for Interpretable Time Series Clustering}, 
-  year={2025},
-  volume={37},
-  number={5},
-  pages={2680-2694},
-  keywords={Time series analysis;Feature extraction;Clustering algorithms;Accuracy;Heuristic algorithms;Clustering methods;Training;Shape;Partitioning algorithms;Directed graphs;Time Series;Clustering;Interpretability},
-  doi={10.1109/TKDE.2025.3543946}}
+### 📁 Project Structure
+
+```(bash) 
+kGraph/
+├── kgraph/             # Core implementation
+├── examples/           # Example usage scripts
+├── ressources/         # Visuals and images
+├── utils/              # utils methods for loading datasets
+├── requirements.txt    # Dependencies
+└── README.md
 ```
-
-## Contributors
-
-- [Paul Boniol](https://boniolp.github.io/), Inria, ENS, PSL University, CNRS
-- [Donato Tiano](https://liris.cnrs.fr/en/member-page/donato-tiano), Università degli Studi di Modena e Reggio Emilia
-- [Angela Bonifati](https://perso.liris.cnrs.fr/angela.bonifati/), Lyon 1 University, IUF, Liris CNRS
-- [Themis Palpanas](https://helios2.mi.parisdescartes.fr/~themisp/), Université Paris Cité, IUF
-
 
 ## Getting started
 
@@ -139,7 +140,7 @@ Ensemble clustering done! (0.0060100555419921875 s)
 ARI score:  0.986598879940902
 ```
 
-For variable lenght time series datasets, $k$-Graph has to be initialized as follows:
+For variable-length time series datasets, $k$-Graph has to be initialized as follows:
 
 ```python
 clf = kGraph(n_clusters=len(set(y)),variable_length=True,n_lengths=10,n_jobs=4)
@@ -188,7 +189,35 @@ plt.close()
 <img width="800" src="./ressources/Trace_cluster_interpretation.jpg"/>
 </p>
 
-You may find a script containing all the code above [here](https://github.com/boniolp/kGraph/blob/main/examples/scripts/Trace_example.py).
+You can find a script containing all the code above [here](https://github.com/boniolp/kGraph/blob/main/examples/scripts/Trace_example.py).
+
+## References
+
+$k$-Graph has been accepted for publication IEEE Transactions on Knowledge and Data Engineering (TKDE). You may find the preprint version [here](https://arxiv.org/abs/2502.13049). 
+If you use $k$-Graph in your project or research, cite the following paper:
+
+> P. Boniol, D. Tiano, A. Bonifati and T. Palpanas, " k -Graph: A Graph Embedding for Interpretable Time Series Clustering," in IEEE Transactions on Knowledge and Data Engineering, doi: 10.1109/TKDE.2025.3543946.
+
+```bibtex
+@ARTICLE{10896823,
+  author={Boniol, Paul and Tiano, Donato and Bonifati, Angela and Palpanas, Themis},
+  journal={IEEE Transactions on Knowledge and Data Engineering}, 
+  title={$k$-Graph: A Graph Embedding for Interpretable Time Series Clustering}, 
+  year={2025},
+  volume={37},
+  number={5},
+  pages={2680-2694},
+  keywords={Time series analysis;Feature extraction;Clustering algorithms;Accuracy;Heuristic algorithms;Clustering methods;Training;Shape;Partitioning algorithms;Directed graphs;Time Series;Clustering;Interpretability},
+  doi={10.1109/TKDE.2025.3543946}}
+```
+
+
+## Contributors
+
+- [Paul Boniol](https://boniolp.github.io/), Inria, ENS, PSL University, CNRS
+- [Donato Tiano](https://liris.cnrs.fr/en/member-page/donato-tiano), Università degli Studi di Modena e Reggio Emilia
+- [Angela Bonifati](https://perso.liris.cnrs.fr/angela.bonifati/), Lyon 1 University, IUF, Liris CNRS
+- [Themis Palpanas](https://helios2.mi.parisdescartes.fr/~themisp/), Université Paris Cité, IUF
 
 
 
